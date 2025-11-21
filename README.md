@@ -1,4 +1,5 @@
 📄 Incident Response Report — Task 2 (SIEM Analysis Using Splunk)
+
 🔐 1. Overview
 
 This project involves analyzing Windows security logs using Splunk SIEM to detect suspicious authentication activities, identify brute-force behavior, classify incidents, and recommend remediation actions.
