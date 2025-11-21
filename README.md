@@ -2,7 +2,7 @@
 
 🔐 1. Overview
 
-This project involves analyzing Windows security logs using Splunk SIEM to detect suspicious authentication activities, identify brute-force behavior, classify incidents, and recommend remediation actions.
+This project analyzes Windows Security Logs using Splunk SIEM to detect suspicious authentication attempts, identify brute-force behavior, classify incidents, and provide remediation steps.
 
 📁 2. Log Source Details
 
@@ -14,22 +14,22 @@ Sourcetype: log2metrics_keyvalue
 
 Index Used: task2_index
 
-🔗 Log File:
-logs/windows_security_logs.txt
+📸 Screenshot — Log Upload:
+/screenshots/upload.png
 
 🎯 3. Objectives
 
-Ingest log data into Splunk
+Ingest logs into Splunk
 
-Search & analyze login events
+Monitor authentication events
 
-Identify failed & successful attempts
+Detect failed & successful logins
 
-Detect brute-force attack pattern
+Identify brute-force login patterns
 
-Create visualizations
+Build visualizations
 
-Draft SOC-style incident report
+Prepare SOC-style incident report
 
 🔍 4. Splunk Queries Used
 ✔ View All Events
@@ -42,49 +42,67 @@ index="task2_index" "Failed Login"
 index="task2_index" "Successful Login"
 
 ✔ Count of Failed Logins
-index="task2_index" "Failed Login" 
+index="task2_index" "Failed Login"
 | stats count
 
 ✔ Failed Logins by IP Address
 index="task2_index" "Failed Login"
 | stats count by IpAddress
 
-✔ EventID Breakdown (4625 / 4624)
+✔ EventID Breakdown (4624 / 4625)
 index="task2_index"
 | stats count by EventID
 
 
-📸 Screenshots in folder:
-/screenshots/query_results/
+📸 Query Result Screenshots:
+
+/screenshots/search_all_events.png
+
+/screenshots/failed_logins.png
+
+/screenshots/successful_login.png
+
+/screenshots/event_timeline1.png
+
+/screenshots/event_timeline2.png
 
 📊 5. Visualizations Created
 ✔ EventID Breakdown Pie Chart
 ✔ Failed Login Attempts Bar Chart
-✔ Successful Login vs Failed Login Comparison
+✔ Successful vs Failed Logins
+✔ Status Pie Chart
 ✔ Account Name Pie Chart
-✔ Status Distribution Pie Chart
 
-📸 Screenshots in folder:
-/screenshots/visualizations/
+📸 Visualization Screenshots:
+
+/screenshots/eventid_breakdown.png
+
+/screenshots/bar_chart_failed_logins.png
+
+/screenshots/pie_chart_successful_login.png
+
+/screenshots/pie_chart_account_name.png
+
+/screenshots/pie_chart_Status.png
+
+/screenshots/visualizations.png
 
 🚨 6. Findings (Alert Analysis)
-🔹 Summary:
-EventID	Description	Count
+🔹 Summary of Events:
+EventID	Meaning	Count
 4625	Failed Login	3
 4624	Successful Login	1
-🔹 Suspicious Behaviour Observed:
+🔹 Suspicious Indicators:
 
-Multiple failed login attempts
-
-Same IP address: 185.34.55.1
+Same attacker IP: 185.34.55.1
 
 Target account: admin
 
-Short time gap between events
+3 failed attempts within seconds
 
-Final successful login
+Followed by 1 successful login
 
-👉 This matches a Brute Force Attack.
+👉 This is a confirmed brute-force attack pattern.
 
 🛑 7. Incident Classification
 
@@ -94,50 +112,65 @@ MITRE ATT&CK: T1110
 
 Severity: High
 
-Reason:
-
-Multiple rapid failed attempts
-
-Successful login after failures
-
-Admin account targeted
-
-Same attacker IP
+Reason: Rapid failed attempts + final successful compromise.
 
 🛠️ 8. Recommended Actions
-✔ Immediate
+✔ Immediate:
 
-Block attacker IP
+Block IP 185.34.55.1
 
-Reset admin credentials
+Force password reset of admin
 
-Review login session details
+Review session after compromise
 
 Enable MFA
 
-✔ System/Policy Fixes
+✔ Policy Fixes:
 
-Implement Account Lockout Policy
+Enable Account Lockout Policies
 
 Monitor EventID 4625 spikes
 
-Restrict admin login from external IP ranges
+Restrict admin login from external IPs
 
-🧾 9. Screenshots
+🧾 9. Screenshots Included
 
-All screenshots stored in:
+All screenshots stored here:
 
 /screenshots/
-   ├── query_results/
-   └── visualizations/
+
+
+Includes:
+
+upload.png
+
+search_all_events.png
+
+failed_logins.png
+
+successful_login.png
+
+event_timeline1.png
+
+event_timeline2.png
+
+eventid_breakdown.png
+
+bar_chart_failed_logins.png
+
+pie_chart_successful_login.png
+
+pie_chart_account_name.png
+
+pie_chart_Status.png
+
+visualizations.png
 
 📄 10. Full PDF Report
-
-The full incident response report is available here:
 
 👉 SOC_Incident_Response_Report.pdf
 
 ✅ 11. Conclusion
 
-A brute-force attack was successfully identified through SIEM analysis.
-Splunk provided visibility into authentication attempts, enabling detection, classification, and mitigation planning.
+Splunk SIEM successfully detected a brute-force login attack involving multiple failed attempts followed by a successful authentication.
+This event is classified as High Severity, requiring immediate remediation and future monitoring.
